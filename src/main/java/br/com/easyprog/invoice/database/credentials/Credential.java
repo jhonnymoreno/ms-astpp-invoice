@@ -1,8 +1,7 @@
-package br.com.easyprog.invoice.config.database.credentials;
+package br.com.easyprog.invoice.database.credentials;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 @Getter
 @Builder

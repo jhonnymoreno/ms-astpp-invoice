@@ -1,9 +1,8 @@
-package br.com.easyprog.invoice.config.database;
+package br.com.easyprog.invoice.database;
 
-import br.com.easyprog.invoice.config.database.credentials.DatabaseCredential;
+import br.com.easyprog.invoice.database.credentials.DatabaseCredential;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

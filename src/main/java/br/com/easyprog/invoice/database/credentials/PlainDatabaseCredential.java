@@ -1,8 +1,7 @@
-package br.com.easyprog.invoice.config.database.credentials;
+package br.com.easyprog.invoice.database.credentials;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
