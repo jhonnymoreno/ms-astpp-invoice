@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -22,7 +22,7 @@ public class CallRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Call> getCalls(final String accountNumber, final CallTypeEnum callType, final LocalDate startDate, final LocalDate endDate) {
+    public List<Call> getCalls(final String accountNumber, final CallTypeEnum callType, final LocalDateTime startDate, final LocalDateTime endDate) {
 
         final MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("accountNumber", accountNumber)
@@ -30,31 +30,31 @@ public class CallRepository {
                 .addValue("startDate", startDate)
                 .addValue("endDate", endDate);
 
-        final StringBuilder query = new StringBuilder();
-
-        query.append("select ");
-        query.append("  DATE_FORMAT(calls.callstart,'%d/%m/%Y') as callDate, ");
-        query.append("  DATE_FORMAT(calls.callstart, '%H:%i:%s') as callHour, ");
-        query.append("  SUBSTRING_INDEX(calls.callerid, ' ', 1) as callerId, ");
-        query.append("  calls.callednum as calledNum, ");
-        query.append("  SEC_TO_TIME(calls.billseconds) billTime, ");
-        query.append("  ROUND(calls.debit,2) as debit ");
-        query.append("from ");
-        query.append("  cdrs calls ");
-        query.append("where ");
-        query.append("  calls.number = :accountNumber ");
-        query.append("and ");
-        query.append("  calls.callstart between :startDate and :endDate ");
-        query.append("and ");
-        query.append("  calls.type = :callType ");
-        query.append("and ");
-        query.append("  calls.billseconds > 0 ");
+        final String query = "select " +
+                "  DATE_FORMAT(calls.callstart,'%d/%m/%Y') as callDate, " +
+                "  DATE_FORMAT(calls.callstart, '%H:%i:%s') as callHour, " +
+                "  SUBSTRING_INDEX(calls.callerid, ' ', 1) as callerId, " +
+                "  calls.callednum as calledNum, " +
+                "  SEC_TO_TIME(calls.billseconds) billTime, " +
+                "  ROUND(calls.debit,2) as debit " +
+                "from " +
+                "  accounts acc " +
+                "  inner join cdrs calls " +
+                "  on calls.accountid = acc.id " +
+                "where " +
+                "  acc.number = :accountNumber " +
+                "and " +
+                "  calls.callstart between :startDate and :endDate " +
+                "and " +
+                "  calls.type = :callType " +
+                "and " +
+                "  calls.billseconds > 0 ";
 
         final ResultSetExtractor<List<Call>> resultSetExtractor =
                 JdbcTemplateMapperFactory.newInstance()
                         .addKeys("callDate", "callHour", "callerId", "calledNum")
                         .newResultSetExtractor(Call.class);
 
-        return this.jdbcTemplate.query(query.toString(), params, resultSetExtractor);
+        return this.jdbcTemplate.query(query, params, resultSetExtractor);
     }
 }

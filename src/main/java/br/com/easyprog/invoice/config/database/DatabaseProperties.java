@@ -1,4 +1,4 @@
-package br.com.easyprog.invoice.database;
+package br.com.easyprog.invoice.config.database;
 
 import lombok.Getter;
 import lombok.Setter;

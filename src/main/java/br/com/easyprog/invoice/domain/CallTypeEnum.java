@@ -6,8 +6,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum CallTypeEnum {
-    RECEIVED_CALL(3),
-    OUTGOING_CALL(0);
+    RECEIVED_CALL(3, "Received"),
+    OUTGOING_CALL(0, "Outgoing");
 
     private final Integer type;
+    private final String description;
 }

@@ -1,6 +1,6 @@
-package br.com.easyprog.invoice.database;
+package br.com.easyprog.invoice.config.database;
 
-import br.com.easyprog.invoice.database.credentials.DatabaseCredential;
+import br.com.easyprog.invoice.config.database.credentials.DatabaseCredential;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;

@@ -5,11 +5,13 @@ import br.com.easyprog.invoice.gateway.AccountGateway;
 import br.com.easyprog.invoice.gateway.BillGateway;
 import br.com.easyprog.invoice.gateway.CallGateway;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
+@Component
 public class GetInvoice {
 
     private final AccountGateway accountGateway;
@@ -22,7 +24,7 @@ public class GetInvoice {
         this.callGateway = callGateway;
     }
 
-    public Invoice execute(String accountNumber, LocalDate startDate, LocalDate endDate) {
+    public Invoice execute(String accountNumber, LocalDateTime startDate, LocalDateTime endDate) {
 
         log.info("Getting Invoice. AccountNumber {}, startDate {}, endDate {}", accountNumber, startDate, endDate);
         final Account account = this.accountGateway.getAccount(accountNumber);

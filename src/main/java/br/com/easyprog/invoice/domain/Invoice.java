@@ -1,14 +1,13 @@
 package br.com.easyprog.invoice.domain;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @EqualsAndHashCode
 public class Invoice {

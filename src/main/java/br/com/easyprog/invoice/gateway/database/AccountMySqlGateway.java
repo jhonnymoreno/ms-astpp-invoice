@@ -4,8 +4,10 @@ import br.com.easyprog.invoice.domain.Account;
 import br.com.easyprog.invoice.gateway.AccountGateway;
 import br.com.easyprog.invoice.gateway.database.repository.AccountRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 @Slf4j
+@Component
 public class AccountMySqlGateway implements AccountGateway {
 
     private final AccountRepository accountRepository;

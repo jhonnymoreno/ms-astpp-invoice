@@ -5,9 +5,11 @@ import br.com.easyprog.invoice.domain.CallTypeEnum;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+@Repository
 public class BillRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
@@ -16,32 +18,30 @@ public class BillRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Bill getBill(final String accountNumber, final CallTypeEnum callType, final LocalDate startDate, final LocalDate endDate) {
+    public Bill getBill(final String accountNumber, final CallTypeEnum callType, final LocalDateTime startDate, final LocalDateTime endDate) {
         final MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("accountNumber", accountNumber)
                 .addValue("callType", callType.getType())
                 .addValue("startDate", startDate)
                 .addValue("endDate", endDate);
 
-        final StringBuilder query = new StringBuilder();
-
-        query.append("select ");
-        query.append("  calls.type as callType, ");
-        query.append("  ROUND(SUM(calls.debit),2) as debit, ");
-        query.append("  SEC_TO_TIME(SUM(calls.billseconds)) as totalBillTime ");
-        query.append("from ");
-        query.append("  accounts acc ");
-        query.append("  inner join cdrs calls ");
-        query.append("  on calls.accountid = acc.id ");
-        query.append("where ");
-        query.append("  acc.number = :accountNumber ");
-        query.append("and ");
-        query.append("  calls.callstart between :startDate and :endDate ");
-        query.append("and ");
-        query.append("  calls.type = :callType ");
-        query.append("group by calls.type ");
+        final String query = "select " +
+                "  calls.type as callType, " +
+                "  ROUND(SUM(calls.debit),2) as debit, " +
+                "  SEC_TO_TIME(SUM(calls.billseconds)) as totalBillTime " +
+                "from " +
+                "  accounts acc " +
+                "  inner join cdrs calls " +
+                "  on calls.accountid = acc.id " +
+                "where " +
+                "  acc.number = :accountNumber " +
+                "and " +
+                "  calls.callstart between :startDate and :endDate " +
+                "and " +
+                "  calls.type = :callType " +
+                "group by calls.type ";
 
         return this.jdbcTemplate.queryForObject(
-                query.toString(), params, BeanPropertyRowMapper.newInstance(Bill.class));
+                query, params, BeanPropertyRowMapper.newInstance(Bill.class));
     }
 }

@@ -1,4 +1,4 @@
-package br.com.easyprog.invoice.database.credentials;
+package br.com.easyprog.invoice.config.database.credentials;
 
 import lombok.Getter;
 import lombok.Setter;

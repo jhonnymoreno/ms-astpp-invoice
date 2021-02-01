@@ -3,8 +3,8 @@ package br.com.easyprog.invoice.gateway;
 import br.com.easyprog.invoice.domain.Bill;
 import br.com.easyprog.invoice.domain.CallTypeEnum;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public interface BillGateway {
-    Bill getBill(final String accountNumber, final CallTypeEnum callType, final LocalDate startDate, final LocalDate endDate);
+    Bill getBill(final String accountNumber, final CallTypeEnum callType, final LocalDateTime startDate, final LocalDateTime endDate);
 }
