@@ -42,11 +42,6 @@ public class DatabaseConfiguration {
     }
 
     private HikariConfig hikariConfig() {
-
-        System.out.println("###### HikariConfig");
-
-        System.out.println("###### databaseCredential \n" + databaseCredential.toString());
-
         final HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setUsername(this.databaseCredential.getCredential().getUser());
         hikariConfig.setPassword(this.databaseCredential.getCredential().getPassword());
@@ -56,8 +51,6 @@ public class DatabaseConfiguration {
         hikariConfig.setMaxLifetime(this.databaseProperties.getMaxLifetime());
         hikariConfig.setConnectionTestQuery(this.databaseProperties.getConnectionTestQuery());
         hikariConfig.setMaximumPoolSize(this.databaseProperties.getMaxPoolSize());
-
-        System.out.println(hikariConfig.toString());
 
         return hikariConfig;
     }

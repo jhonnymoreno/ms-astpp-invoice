@@ -2,6 +2,7 @@ package br.com.easyprog.invoice.domain;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -16,4 +17,7 @@ public class Invoice {
     private Bill billReceivedCalls;
     private List<Call> outgoingCalls;
     private List<Call> receivedCalls;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private LocalDate createdDate;
 }

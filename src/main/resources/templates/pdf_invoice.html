@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Invoice</title>
+    <bookmarks>
+        <bookmark name="Invoice" href="#invoice"></bookmark>
+    </bookmarks>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+</head>
+
+<body>
+<div><span class="titles-style" th:text="|Cliente: ${invoice.account.accountName}|"></span></div>
+<div><span class="titles-style" th:text="|Cod: ${invoice.account.accountNumber}|"></span></div>
+<div><span class="titles-style" th:text="|Número(s): ${invoice.account.phoneNumber}|"></span></div>
+<div><span class="titles-style" th:text="|Data Relatório: ${invoice.createdDate}|"></span></div>
+<div><span class="titles-style" th:text="|Período: ${invoice.startDate} a ${invoice.endDate}|"></span></div>
+<div><span class="titles-style" th:text="|Total ligações: R$ ${invoice.billOutgoingCalls.debit}|"></span></div>
+
+<!-- Outgoing calls Table -->
+<span class="titles-style">Relatório de Ligações realizadas</span>
+<div id="outgoingcalls">
+    <div th:if="${not #lists.isEmpty(invoice.outgoingCalls)}">
+        <table class="call_table paginate-table">
+            <thead>
+            <tr>
+                <th>Data</th>
+                <th>Destino</th>
+                <th>Duração</th>
+                <th>Custo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="call : ${invoice.outgoingCalls}">
+                <td th:text="|${call?.callDate} ${call?.callHour}|"></td>
+                <td th:text="${call?.calledNum}"></td>
+                <td th:text="${call?.billTime}"></td>
+                <td th:text="${call?.debit}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div><span class="titles-style" th:text="|Total: ${invoice.billOutgoingCalls.totalBillTime}|"></span></div>
+
+<!-- Received calls Table -->
+<div><span class="titles-style">Relatório de Ligações recebidas</span></div>
+<div id="receivedcalls">
+    <div th:if="${not #lists.isEmpty(invoice.receivedCalls)}">
+        <table class="call_table paginate-table">
+            <thead>
+            <tr>
+                <th>Data</th>
+                <th>Origem</th>
+                <th>Duração</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="call : ${invoice.receivedCalls}">
+                <td th:text="|${call?.callDate} ${call?.callHour}|"></td>
+                <td th:text="${call?.calledNum}"></td>
+                <td th:text="${call?.billTime}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<span class="titles-style" th:text="|Total: ${invoice.billReceivedCalls.totalBillTime}|"></span>
+
+</body>
+</html>

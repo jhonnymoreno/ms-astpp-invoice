@@ -7,6 +7,7 @@ import br.com.easyprog.invoice.gateway.CallGateway;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -39,6 +40,9 @@ public class GetInvoice {
                 .billReceivedCalls(billReceivedCalls)
                 .outgoingCalls(outgoingCalls)
                 .receivedCalls(receivedCalls)
+                .createdDate(LocalDate.now())
+                .startDate(startDate.toLocalDate())
+                .endDate(endDate.toLocalDate())
                 .build();
     }
 }
